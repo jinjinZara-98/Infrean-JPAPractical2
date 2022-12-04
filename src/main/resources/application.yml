@@ -1,0 +1,30 @@
+spring:
+    datasource:
+  #    url: jdbc:h2:tcp://localhost/~/jpashop
+  #    username: sa
+  #    password:
+  #    driver-class-name: org.h2.Driver
+        url: jdbc:mysql://localhost:3306/jpashop?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+
+#단순 조회이므로 데이터나 테이블을 변경할 일 없음,
+#ddl-auto: none 테이블 drop하지 않기 때문에 데이터 넣어놓으면 계속 쓸 수 있음
+#ddl-auto: create는 애플리케이션 시작할때 테이블 드랍하고 다시 만듬
+    jpa:
+      hibernate:
+        ddl-auto: create
+      properties:
+        hibernate:
+  #        show_sql: true
+          format_sql: true
+#          인쿼리 개수 몇개로 할꺼냐, 총 데이터가 100이고 이게 10이면 총 10번 인쿼리 나감
+#          N+1문제 어느정도 해결, 이 옵션을 사용하면 컬렉션이나, 프록시 객체를 한꺼번에 설정한 size 만큼 IN 쿼리로 조회
+#          1000개가 최대,  100~1000 사이를 선택하는 것을 권장
+#          1000으로 잡으면 한번에 1000개를 DB에서 애플리케이션에 불러오므로 DB에 순간 부하가 증가할 수 있음
+          default_batch_fetch_size: 1000 #최적화 옵션
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
